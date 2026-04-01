@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AWP | Gorilla Tag Mod Menu</title>
+    <title>AWP | Gorilla Tag Utility</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        html { scroll-behavior: smooth; }
         body {
             background-color: #050505;
             background-image: 
@@ -26,7 +25,7 @@
             border-radius: 40px;
         }
 
-        .feature-card, .changelog-card {
+        .feature-card, .log-card {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 24px;
@@ -40,153 +39,138 @@
         }
 
         .blue-glow { box-shadow: 0 0 25px rgba(59, 130, 246, 0.4); }
+        .red-glow { box-shadow: 0 0 25px rgba(239, 68, 68, 0.2); }
 
-        .gradient-text {
-            background: linear-gradient(90deg, #3b82f6, #93c5fd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            padding-bottom: 10px;
+        .page-section {
+            display: none;
+            min-height: 100vh;
+            animation: fadeIn 0.5s ease;
         }
+
+        .active-section { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-link { cursor: pointer; transition: 0.3s; }
+        .nav-link:hover { color: white; }
+        .nav-active { color: #3b82f6 !important; border-bottom: 2px solid #3b82f6; }
 
         #typewriter-text::after {
             content: '_';
             color: #3b82f6;
             animation: blink 0.8s step-end infinite;
         }
-
         @keyframes blink { 50% { opacity: 0; } }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
     </style>
 </head>
 <body class="flex flex-col items-center">
 
-    <div class="w-full bg-blue-600/10 border-b border-blue-500/20 py-2 text-center text-xs font-bold tracking-widest text-blue-400 uppercase z-[60]">
-        AWP v1.0 — INITIAL DEVELOPMENT PHASE
-    </div>
-
-    <nav class="fixed top-12 z-50 flex items-center justify-center w-full px-4">
-        <div class="bg-black/50 backdrop-blur-md border border-white/10 px-6 py-3 rounded-full flex items-center gap-8 shadow-2xl">
-            <div class="text-xl font-extrabold tracking-tighter flex items-center gap-2">
-                <span class="text-blue-500">AWP</span>
-            </div>
-            <div class="hidden md:flex gap-6 text-xs font-bold uppercase tracking-widest text-gray-400">
-                <a href="#home" class="hover:text-white transition">Home</a>
-                <a href="#features" class="hover:text-white transition">Cheats</a>
-                <a href="#changelog" class="hover:text-white transition">Roadmap</a>
-                <a href="#status" class="hover:text-white transition">Status</a>
-            </div>
-            <a href="https://discord.gg/RaEJjvUq" target="_blank" class="bg-blue-600 hover:bg-blue-500 px-5 py-2 rounded-full text-sm font-semibold blue-glow transition">Join Discord</a>
+    <nav class="fixed top-6 z-50 flex items-center justify-center w-full px-4">
+        <div class="bg-black/50 backdrop-blur-md border border-white/10 px-6 py-3 rounded-full flex items-center gap-6 shadow-2xl text-[10px] md:text-xs font-bold uppercase tracking-widest text-gray-400">
+            <span onclick="showPage('home')" id="link-home" class="nav-link nav-active">Home</span>
+            <span onclick="showPage('features')" id="link-features" class="nav-link">Features</span>
+            <span onclick="showPage('status')" id="link-status" class="nav-link">Status</span>
+            <span onclick="showPage('logs')" id="link-logs" class="nav-link">Logs</span>
+            <a href="https://discord.gg/RaEJjvUq" target="_blank" class="bg-blue-600 text-white px-3 py-1.5 rounded-full blue-glow hover:bg-blue-500 transition">Discord</a>
         </div>
     </nav>
 
-    <section id="home" class="min-h-screen flex flex-col items-center justify-center w-full max-w-6xl px-6 pt-20">
-        <main class="glass-panel w-full p-16 relative overflow-hidden">
-            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-blue-600/20 blur-[120px]"></div>
+    <section id="home" class="page-section active-section flex-col items-center justify-center w-full max-w-6xl px-6 pt-20">
+        <main class="glass-panel w-full p-12 md:p-20 text-center relative overflow-hidden">
+            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-blue-600/10 blur-[100px]"></div>
             
-            <div class="relative z-10 text-center py-10">
-                <div class="h-[120px] flex items-center justify-center mb-4">
-                    <h1 id="typewriter-text" class="text-6xl md:text-8xl font-black gradient-text"></h1>
-                </div>
-                <p class="text-gray-400 text-xl max-w-2xl mx-auto mb-10">
-                    The most advanced utility for Gorilla Tag is currently being forged. Join the inner circle to be the first to know when we launch.
-                </p>
-                <div class="flex justify-center gap-6">
-                    <a href="https://discord.gg/RaEJjvUq" target="_blank" class="bg-blue-600 hover:bg-blue-500 px-10 py-4 rounded-2xl font-bold text-lg blue-glow transition-all hover:scale-105">Join the Waitlist</a>
-                    <a href="#changelog" class="bg-white/5 border border-white/10 px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all">View Roadmap</a>
-                </div>
+            <div class="h-[140px] flex flex-col justify-center items-center">
+                <h1 class="text-4xl md:text-6xl font-black mb-2 tracking-tighter uppercase">AWP <span class="text-blue-500 font-black">ON TOP</span></h1>
+                <h2 id="typewriter-text" class="text-2xl md:text-4xl font-bold text-gray-400 h-10"></h2>
+            </div>
+
+            <p class="text-gray-500 text-md md:text-lg max-w-2xl mx-auto mb-10 mt-6 leading-relaxed">
+                The most reliable Gorilla Tag utility. Currently being rewritten for maximum safety. Join the 25+ founding members.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button onclick="showPage('features')" class="bg-blue-600 px-8 py-3 rounded-2xl font-bold blue-glow hover:scale-105 transition">View Features</button>
+                <button onclick="showPage('status')" class="bg-white/5 border border-white/10 px-8 py-3 rounded-2xl font-bold hover:bg-white/10 transition">Check Status</button>
             </div>
         </main>
     </section>
 
-    <section id="changelog" class="w-full max-w-4xl px-6 py-10 reveal">
-        <h2 class="text-3xl font-bold mb-8 text-center italic">Project <span class="text-blue-500">Roadmap</span></h2>
-        <div class="changelog-card p-8 border-l-4 border-blue-600">
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-blue-400 font-bold">Initial Build (v1.0)</span>
-                <span class="text-xs text-gray-500 bg-white/5 px-2 py-1 rounded">Pre-Alpha</span>
+    <section id="features" class="page-section flex-col items-center justify-center w-full max-w-6xl px-6 pt-32 pb-20">
+        <h2 class="text-4xl font-black mb-12 uppercase">Elite <span class="text-blue-500">Features</span></h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+            <div class="feature-card p-8 text-center">
+                <div class="text-5xl mb-6">🦍</div>
+                <h3 class="text-xl font-bold mb-3 tracking-tighter uppercase">Long Arms</h3>
+                <p class="text-gray-500 text-sm">Custom skeletal extension with smoothing.</p>
             </div>
-            <ul class="space-y-3 text-gray-400 text-sm">
-                <li class="flex items-start gap-2">
-                    <span class="text-blue-500">●</span> Designing the core UI and Injector.
-                </li>
-                <li class="flex items-start gap-2">
-                    <span class="text-blue-500">●</span> Developing private long-arm algorithms.
-                </li>
-                <li class="flex items-start gap-2">
-                    <span class="text-blue-500">●</span> Stress-testing Anti-Report protections.
-                </li>
+            <div class="feature-card p-8 text-center">
+                <div class="text-5xl mb-6">👁️</div>
+                <h3 class="text-xl font-bold mb-3 tracking-tighter uppercase">ESP Chams</h3>
+                <p class="text-gray-500 text-sm">See every player outline through the map.</p>
+            </div>
+            <div class="feature-card p-8 text-center">
+                <div class="text-5xl mb-6">⚡</div>
+                <h3 class="text-xl font-bold mb-3 tracking-tighter uppercase">Movement</h3>
+                <p class="text-gray-500 text-sm">Speedboost, flight, and platforms.</p>
+            </div>
+            <div class="feature-card p-8 text-center border-dashed border-2 border-blue-500/30 bg-blue-500/5">
+                <div class="text-5xl mb-6 opacity-60">✨</div>
+                <h3 class="text-xl font-bold mb-3 tracking-tighter uppercase">And etc !</h3>
+                <p class="text-gray-500 text-sm italic">Dozens of secret mods inside.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="status" class="page-section flex-col items-center justify-center w-full max-w-4xl px-6 pt-32 pb-20">
+        <div class="glass-panel w-full p-12 text-center border-red-500/20 red-glow">
+            <h2 class="text-3xl font-black mb-10 tracking-widest uppercase">System Status</h2>
+            <div class="flex flex-col md:flex-row justify-around gap-12 items-center">
+                <div>
+                    <div class="text-red-500 font-black text-3xl animate-pulse">● OFFLINE</div>
+                    <p class="text-gray-500 text-xs uppercase tracking-widest mt-2">Menu Loader</p>
+                </div>
+                <div>
+                    <div class="text-green-500 font-black text-3xl">● ONLINE</div>
+                    <p class="text-gray-500 text-xs uppercase tracking-widest mt-2">Discord & Auth</p>
+                </div>
+            </div>
+            <p class="mt-12 text-gray-500 italic text-sm">"Our developers are currently bypassing the latest anti-cheat patches."</p>
+        </div>
+    </section>
+
+    <section id="logs" class="page-section flex-col items-center justify-center w-full max-w-3xl px-6 pt-32 pb-20">
+        <h2 class="text-3xl font-black mb-10 uppercase tracking-tighter text-center">Development <span class="text-blue-500">History</span></h2>
+        <div class="log-card p-8 w-full border-l-4 border-blue-600">
+            <div class="flex justify-between items-center mb-6">
+                <span class="bg-blue-600/20 text-blue-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">v1.0 Progress</span>
+                <span class="text-gray-600 text-xs font-bold uppercase">MARCH 2026</span>
+            </div>
+            <ul class="space-y-4 text-gray-400 text-sm">
+                <li>● Rewriting the internal injector for safety.</li>
+                <li>● Fixing Buttons for the menu!</li>
+                <li>● Member count reached 25+ founding users.</li>
             </ul>
         </div>
     </section>
 
-    <section id="features" class="w-full max-w-6xl px-6 py-20 reveal">
-        <h2 class="text-4xl font-bold mb-12 text-center">Engineered for <span class="text-blue-500">Gorillas</span></h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="feature-card p-8">
-                <div class="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center mb-6 text-blue-500">🦍</div>
-                <h3 class="text-xl font-bold mb-3">Long Arms</h3>
-                <p class="text-gray-500 leading-relaxed">Precision skeletal extension technology for maximum reach.</p>
-            </div>
-            <div class="feature-card p-8">
-                <div class="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center mb-6 text-blue-500">👁</div>
-                <h3 class="text-xl font-bold mb-3">ESP Chams</h3>
-                <p class="text-gray-500 leading-relaxed">Wallhacks designed for tracking monkes through any obstacle.</p>
-            </div>
-            <div class="feature-card p-8">
-                <div class="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center mb-6 text-blue-500">⚡</div>
-                <h3 class="text-xl font-bold mb-3">Movement</h3>
-                <p class="text-gray-500 leading-relaxed">Flight, speed boosts, and stamina tweaks for the ultimate run.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="status" class="w-full max-w-4xl px-6 py-20 reveal">
-        <div class="glass-panel p-8 flex flex-col md:flex-row items-center justify-between gap-8 border-white/10">
-            <div>
-                <h2 class="text-2xl font-bold">Project Status</h2>
-                <p class="text-gray-500">The project is in active development.</p>
-            </div>
-            <div class="flex gap-12">
-                <div class="text-center">
-                    <div class="text-yellow-500 font-bold mb-1 flex items-center gap-2">
-                        <span class="w-3 h-3 bg-yellow-500 rounded-full"></span> BUILDING
-                    </div>
-                    <p class="text-xs text-gray-500 uppercase tracking-widest">Menu</p>
-                </div>
-                <div class="text-center">
-                    <div class="text-green-500 font-bold mb-1">ONLINE</div>
-                    <p class="text-xs text-gray-500 uppercase tracking-widest">Discord</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-12 py-20 border-t border-white/10 mt-20">
-        <div class="text-center">
-            <h3 class="text-blue-500 font-bold text-xl mb-2">Secure</h3>
-            <p class="text-gray-500 text-sm tracking-wide uppercase">Anti-Ban Focused</p>
-        </div>
-        <div class="text-center">
-            <h3 class="text-blue-500 font-bold text-xl mb-2">Trusted</h3>
-            <p class="text-gray-500 text-sm tracking-wide uppercase">25+ Founding Members</p>
-        </div>
-        <div class="text-center">
-            <h3 class="text-blue-500 font-bold text-xl mb-2">Community</h3>
-            <p class="text-gray-500 text-sm tracking-wide uppercase">Discord Growing</p>
-        </div>
+    <footer class="py-10 text-gray-600 text-[10px] uppercase tracking-[0.2em]">
+        © 2026 AWP PROJECT - 25 MEMBERS STRONG
     </footer>
 
     <script>
-        const words = ["Under Development", "Coming Soon", "The Best One Out", "Building Bypasses", "AWP On Top"];
+        function showPage(pageId) {
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => section.classList.remove('active-section'));
+            document.getElementById(pageId).classList.add('active-section');
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => link.classList.remove('nav-active'));
+            document.getElementById('link-' + pageId).classList.add('nav-active');
+            window.scrollTo(0, 0);
+        }
+
+        const words = ["Under Development", "Coming Soon", "The Best One Out", "Building Bypasses", "Highly Reliable"];
         let wordIndex = 0, charIndex = 0, isDeleting = false;
         const textElement = document.getElementById("typewriter-text");
 
@@ -201,13 +185,6 @@
             setTimeout(type, speed);
         }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) entry.target.classList.add('active');
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         document.addEventListener('DOMContentLoaded', type);
     </script>
 </body>
