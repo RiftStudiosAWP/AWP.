@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWP | Gorilla Tag Mod Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        html { scroll-behavior: smooth; }
+        body {
+            background-color: #050505;
+            background-image: 
+                linear-gradient(to right, #111 1px, transparent 1px),
+                linear-gradient(to bottom, #111 1px, transparent 1px);
+            background-size: 40px 40px;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 40px;
+        }
+
+        .feature-card, .changelog-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(59, 130, 246, 0.05);
+            border-color: rgba(59, 130, 246, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .blue-glow { box-shadow: 0 0 25px rgba(59, 130, 246, 0.4); }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #93c5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding-bottom: 10px;
+        }
+
+        #typewriter-text::after {
+            content: '_';
+            color: #3b82f6;
+            animation: blink 0.8s step-end infinite;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center">
+
+    <div class="w-full bg-blue-600/10 border-b border-blue-500/20 py-2 text-center text-xs font-bold tracking-widest text-blue-400 uppercase z-[60]">
+        AWP v1.0 — INITIAL DEVELOPMENT PHASE
+    </div>
+
+    <nav class="fixed top-12 z-50 flex items-center justify-center w-full px-4">
+        <div class="bg-black/50 backdrop-blur-md border border-white/10 px-6 py-3 rounded-full flex items-center gap-8 shadow-2xl">
+            <div class="text-xl font-extrabold tracking-tighter flex items-center gap-2">
+                <span class="text-blue-500">AWP</span>
+            </div>
+            <div class="hidden md:flex gap-6 text-xs font-bold uppercase tracking-widest text-gray-400">
+                <a href="#home" class="hover:text-white transition">Home</a>
+                <a href="#features" class="hover:text-white transition">Cheats</a>
+                <a href="#changelog" class="hover:text-white transition">Roadmap</a>
+                <a href="#status" class="hover:text-white transition">Status</a>
+            </div>
+            <a href="https://discord.gg/RaEJjvUq" target="_blank" class="bg-blue-600 hover:bg-blue-500 px-5 py-2 rounded-full text-sm font-semibold blue-glow transition">Join Discord</a>
+        </div>
+    </nav>
+
+    <section id="home" class="min-h-screen flex flex-col items-center justify-center w-full max-w-6xl px-6 pt-20">
+        <main class="glass-panel w-full p-16 relative overflow-hidden">
+            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-blue-600/20 blur-[120px]"></div>
+            
+            <div class="relative z-10 text-center py-10">
+                <div class="h-[120px] flex items-center justify-center mb-4">
+                    <h1 id="typewriter-text" class="text-6xl md:text-8xl font-black gradient-text"></h1>
+                </div>
+                <p class="text-gray-400 text-xl max-w-2xl mx-auto mb-10">
+                    The most advanced utility for Gorilla Tag is currently being forged. Join the inner circle to be the first to know when we launch.
+                </p>
+                <div class="flex justify-center gap-6">
+                    <a href="https://discord.gg/RaEJjvUq" target="_blank" class="bg-blue-600 hover:bg-blue-500 px-10 py-4 rounded-2xl font-bold text-lg blue-glow transition-all hover:scale-105">Join the Waitlist</a>
+                    <a href="#changelog" class="bg-white/5 border border-white/10 px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all">View Roadmap</a>
+                </div>
+            </div>
+        </main>
+    </section>
+
+    <section id="changelog" class="w-full max-w-4xl px-6 py-10 reveal">
+        <h2 class="text-3xl font-bold mb-8 text-center italic">Project <span class="text-blue-500">Roadmap</span></h2>
+        <div class="changelog-card p-8 border-l-4 border-blue-600">
+            <div class="flex justify-between items-center mb-4">
+                <span class="text-blue-400 font-bold">Initial Build (v1.0)</span>
+                <span class="text-xs text-gray-500 bg-white/5 px-2 py-1 rounded">Pre-Alpha</span>
+            </div>
+            <ul class="space-y-3 text-gray-400 text-sm">
+                <li class="flex items-start gap-2">
+                    <span class="text-blue-500">●</span> Designing the core UI and Injector.
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-blue-500">●</span> Developing private long-arm algorithms.
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-blue-500">●</span> Stress-testing Anti-Report protections.
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="features" class="w-full max-w-6xl px-6 py-20 reveal">
+        <h2 class="text-4xl font-bold mb-12 text-center">Engineered for <span class="text-blue-500">Gorillas</span></h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="feature-card p-8">
+                <div class="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center mb-6 text-blue-500">🦍</div>
+                <h3 class="text-xl font-bold mb-3">Long Arms</h3>
+                <p class="text-gray-500 leading-relaxed">Precision skeletal extension technology for maximum reach.</p>
+            </div>
+            <div class="feature-card p-8">
+                <div class="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center mb-6 text-blue-500">👁</div>
+                <h3 class="text-xl font-bold mb-3">ESP Chams</h3>
+                <p class="text-gray-500 leading-relaxed">Wallhacks designed for tracking monkes through any obstacle.</p>
+            </div>
+            <div class="feature-card p-8">
+                <div class="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center mb-6 text-blue-500">⚡</div>
+                <h3 class="text-xl font-bold mb-3">Movement</h3>
+                <p class="text-gray-500 leading-relaxed">Flight, speed boosts, and stamina tweaks for the ultimate run.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="status" class="w-full max-w-4xl px-6 py-20 reveal">
+        <div class="glass-panel p-8 flex flex-col md:flex-row items-center justify-between gap-8 border-white/10">
+            <div>
+                <h2 class="text-2xl font-bold">Project Status</h2>
+                <p class="text-gray-500">The project is in active development.</p>
+            </div>
+            <div class="flex gap-12">
+                <div class="text-center">
+                    <div class="text-yellow-500 font-bold mb-1 flex items-center gap-2">
+                        <span class="w-3 h-3 bg-yellow-500 rounded-full"></span> BUILDING
+                    </div>
+                    <p class="text-xs text-gray-500 uppercase tracking-widest">Menu</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-green-500 font-bold mb-1">ONLINE</div>
+                    <p class="text-xs text-gray-500 uppercase tracking-widest">Discord</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-12 py-20 border-t border-white/10 mt-20">
+        <div class="text-center">
+            <h3 class="text-blue-500 font-bold text-xl mb-2">Secure</h3>
+            <p class="text-gray-500 text-sm tracking-wide uppercase">Anti-Ban Focused</p>
+        </div>
+        <div class="text-center">
+            <h3 class="text-blue-500 font-bold text-xl mb-2">Trusted</h3>
+            <p class="text-gray-500 text-sm tracking-wide uppercase">25+ Founding Members</p>
+        </div>
+        <div class="text-center">
+            <h3 class="text-blue-500 font-bold text-xl mb-2">Community</h3>
+            <p class="text-gray-500 text-sm tracking-wide uppercase">Discord Growing</p>
+        </div>
+    </footer>
+
+    <script>
+        const words = ["Under Development", "Coming Soon", "The Best One Out", "Building Bypasses", "AWP On Top"];
+        let wordIndex = 0, charIndex = 0, isDeleting = false;
+        const textElement = document.getElementById("typewriter-text");
+
+        function type() {
+            const currentWord = words[wordIndex];
+            textElement.textContent = isDeleting ? currentWord.substring(0, charIndex - 1) : currentWord.substring(0, charIndex + 1);
+            charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
+
+            let speed = isDeleting ? 50 : 100;
+            if (!isDeleting && charIndex === currentWord.length) { speed = 2000; isDeleting = true; }
+            else if (isDeleting && charIndex === 0) { isDeleting = false; wordIndex = (wordIndex + 1) % words.length; speed = 500; }
+            setTimeout(type, speed);
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        document.addEventListener('DOMContentLoaded', type);
+    </script>
+</body>
+</html>
