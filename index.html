@@ -3,188 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AWP | Gorilla Tag Utility</title>
+    <title>AWP | GTAG</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #050505;
-            background-image: 
-                linear-gradient(to right, #111 1px, transparent 1px),
-                linear-gradient(to bottom, #111 1px, transparent 1px);
-            background-size: 40px 40px;
+            background: #050505;
+            background-image: linear-gradient(#111 1px, transparent 1px), linear-gradient(90deg, #111 1px, transparent 1px);
+            background-size: 35px 35px;
             font-family: 'Inter', sans-serif;
-            color: white;
+            color: #fff;
             overflow-x: hidden;
         }
-
-        .glass-panel {
-            background: rgba(10, 10, 10, 0.8);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            border-radius: 40px;
+        .panel-main {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+            border-radius: 35px;
         }
-
-        .feature-card, .log-card {
-            background: rgba(255, 255, 255, 0.02);
+        .card-item {
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px;
-            transition: all 0.3s ease;
+            border-radius: 20px;
+            transition: 0.2s ease-in-out;
         }
-
-        .feature-card:hover {
-            background: rgba(59, 130, 246, 0.05);
-            border-color: rgba(59, 130, 246, 0.3);
-            transform: translateY(-5px);
+        .card-item:hover {
+            border-color: rgba(59, 130, 246, 0.4);
+            background: rgba(59, 130, 246, 0.04);
+            transform: translateY(-3px);
         }
-
-        .blue-glow { box-shadow: 0 0 25px rgba(59, 130, 246, 0.4); }
-        .red-glow { box-shadow: 0 0 25px rgba(239, 68, 68, 0.2); }
-
-        .page-section {
-            display: none;
-            min-height: 100vh;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .active-section { display: flex; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .nav-link { cursor: pointer; transition: 0.3s; }
-        .nav-link:hover { color: white; }
-        .nav-active { color: #3b82f6 !important; border-bottom: 2px solid #3b82f6; }
-
-        #typewriter-text::after {
-            content: '_';
-            color: #3b82f6;
-            animation: blink 0.8s step-end infinite;
-        }
+        .glow-b { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+        .glow-r { box-shadow: 0 0 20px rgba(239, 68, 68, 0.2); }
+        .page { display: none; min-height: 100vh; animation: fade 0.4s ease; }
+        .page-active { display: flex; }
+        @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+        .nav-btn { cursor: pointer; opacity: 0.6; transition: 0.2s; }
+        .nav-btn:hover { opacity: 1; }
+        .active-link { opacity: 1; color: #3b82f6; border-bottom: 2px solid #3b82f6; }
+        #typing::after { content: '|'; color: #3b82f6; animation: blink 1s infinite; }
         @keyframes blink { 50% { opacity: 0; } }
     </style>
 </head>
 <body class="flex flex-col items-center">
 
-    <nav class="fixed top-6 z-50 flex items-center justify-center w-full px-4">
-        <div class="bg-black/50 backdrop-blur-md border border-white/10 px-6 py-3 rounded-full flex items-center gap-6 shadow-2xl text-[10px] md:text-xs font-bold uppercase tracking-widest text-gray-400">
-            <span onclick="showPage('home')" id="link-home" class="nav-link nav-active">Home</span>
-            <span onclick="showPage('features')" id="link-features" class="nav-link">Features</span>
-            <span onclick="showPage('status')" id="link-status" class="nav-link">Status</span>
-            <span onclick="showPage('logs')" id="link-logs" class="nav-link">Logs</span>
-            <a href="https://discord.gg/RaEJjvUq" target="_blank" class="bg-blue-600 text-white px-3 py-1.5 rounded-full blue-glow hover:bg-blue-500 transition">Discord</a>
+    <nav class="fixed top-6 z-50 flex justify-center w-full px-4">
+        <div class="bg-black/60 backdrop-blur-lg border border-white/10 px-6 py-3 rounded-full flex items-center gap-6 text-[11px] font-bold uppercase tracking-wider">
+            <span onclick="setPage('home')" id="l-home" class="nav-btn active-link">Home</span>
+            <span onclick="setPage('mods')" id="l-mods" class="nav-btn">Features</span>
+            <span onclick="setPage('status')" id="l-status" class="nav-btn">Status</span>
+            <span onclick="setPage('creds')" id="l-creds" class="nav-btn">Credits</span>
+            <span onclick="setPage('logs')" id="l-logs" class="nav-btn">Logs</span>
+            <a href="https://discord.gg/RaEJjvUq" target="_blank" class="bg-blue-600 px-4 py-1.5 rounded-full glow-b hover:bg-blue-500 transition">Discord</a>
         </div>
     </nav>
 
-    <section id="home" class="page-section active-section flex-col items-center justify-center w-full max-w-6xl px-6 pt-20">
-        <main class="glass-panel w-full p-12 md:p-20 text-center relative overflow-hidden">
-            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 bg-blue-600/10 blur-[100px]"></div>
-            
-            <div class="h-[140px] flex flex-col justify-center items-center">
-                <h1 class="text-4xl md:text-6xl font-black mb-2 tracking-tighter uppercase">AWP <span class="text-blue-500 font-black">ON TOP</span></h1>
-                <h2 id="typewriter-text" class="text-2xl md:text-4xl font-bold text-gray-400 h-10"></h2>
-            </div>
-
-            <p class="text-gray-500 text-md md:text-lg max-w-2xl mx-auto mb-10 mt-6 leading-relaxed">
-                The most reliable Gorilla Tag utility. Currently being rewritten for maximum safety. Join the 25+ founding members.
-            </p>
+    <section id="home" class="page page-active flex-col items-center justify-center w-full max-w-5xl px-6">
+        <div class="panel-main w-full p-12 md:p-20 text-center relative overflow-hidden">
+            <div class="absolute -top-10 -right-10 w-64 h-64 bg-blue-600/10 blur-[80px]"></div>
+            <h1 class="text-5xl md:text-7xl font-black mb-4 tracking-tighter uppercase">AWP <span class="text-blue-500 text-glow">ON TOP</span></h1>
+            <div class="h-8 mb-8"><span id="typing" class="text-xl md:text-2xl font-semibold text-gray-400"></span></div>
+            <p class="text-gray-500 text-sm md:text-base max-w-xl mx-auto mb-10">We're rewriting the menu for v1.2 to keep it undetected. Join the inner circle.</p>
             <div class="flex flex-wrap justify-center gap-4">
-                <button onclick="showPage('features')" class="bg-blue-600 px-8 py-3 rounded-2xl font-bold blue-glow hover:scale-105 transition">View Features</button>
-                <button onclick="showPage('status')" class="bg-white/5 border border-white/10 px-8 py-3 rounded-2xl font-bold hover:bg-white/10 transition">Check Status</button>
+                <button onclick="setPage('mods')" class="bg-blue-600 px-8 py-3 rounded-xl font-bold glow-b">View Mods</button>
+                <button onclick="setPage('creds')" class="bg-white/5 border border-white/10 px-8 py-3 rounded-xl font-bold">The Team</button>
             </div>
-        </main>
+        </div>
     </section>
 
-    <section id="features" class="page-section flex-col items-center justify-center w-full max-w-6xl px-6 pt-32 pb-20">
-        <h2 class="text-4xl font-black mb-12 uppercase">Elite <span class="text-blue-500">Features</span></h2>
+    <section id="mods" class="page flex-col items-center justify-center w-full max-w-6xl px-6 pt-32 pb-20">
+        <h2 class="text-3xl font-black mb-10 uppercase italic">Current <span class="text-blue-500">Utility</span></h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-            <div class="feature-card p-8 text-center">
-                <div class="text-5xl mb-6">🦍</div>
-                <h3 class="text-xl font-bold mb-3 tracking-tighter uppercase">Long Arms</h3>
-                <p class="text-gray-500 text-sm">Custom skeletal extension with smoothing.</p>
+            <div class="card-item p-8 text-center">
+                <div class="text-4xl mb-4">🦍</div>
+                <h3 class="font-bold mb-2 uppercase text-sm">Long Arms</h3>
+                <p class="text-gray-500 text-xs">Smooth skeletal reach mods.</p>
             </div>
-            <div class="feature-card p-8 text-center">
-                <div class="text-5xl mb-6">👁️</div>
-                <h3 class="text-xl font-bold mb-3 tracking-tighter uppercase">ESP Chams</h3>
-                <p class="text-gray-500 text-sm">See every player outline through the map.</p>
+            <div class="card-item p-8 text-center">
+                <div class="text-4xl mb-4">👁️</div>
+                <h3 class="font-bold mb-2 uppercase text-sm">ESP Chams</h3>
+                <p class="text-gray-500 text-xs">Player outlines through map objects.</p>
             </div>
-            <div class="feature-card p-8 text-center">
-                <div class="text-5xl mb-6">⚡</div>
-                <h3 class="text-xl font-bold mb-3 tracking-tighter uppercase">Movement</h3>
-                <p class="text-gray-500 text-sm">Speedboost, flight, and platforms.</p>
+            <div class="card-item p-8 text-center">
+                <div class="text-4xl mb-4">⚡</div>
+                <h3 class="font-bold mb-2 uppercase text-sm">Movement</h3>
+                <p class="text-gray-500 text-xs">Bypassed speed and flight mods.</p>
             </div>
-            <div class="feature-card p-8 text-center border-dashed border-2 border-blue-500/30 bg-blue-500/5">
-                <div class="text-5xl mb-6 opacity-60">✨</div>
-                <h3 class="text-xl font-bold mb-3 tracking-tighter uppercase">And etc !</h3>
-                <p class="text-gray-500 text-sm italic">Dozens of secret mods inside.</p>
+            <div class="card-item p-8 text-center border-dashed border-blue-500/20">
+                <div class="text-4xl mb-4 opacity-40">✨</div>
+                <h3 class="font-bold mb-2 uppercase text-sm italic">And etc !</h3>
+                <p class="text-gray-500 text-xs">Dozens of secret mods inside.</p>
             </div>
         </div>
     </section>
 
-    <section id="status" class="page-section flex-col items-center justify-center w-full max-w-4xl px-6 pt-32 pb-20">
-        <div class="glass-panel w-full p-12 text-center border-red-500/20 red-glow">
-            <h2 class="text-3xl font-black mb-10 tracking-widest uppercase">System Status</h2>
-            <div class="flex flex-col md:flex-row justify-around gap-12 items-center">
-                <div>
-                    <div class="text-red-500 font-black text-3xl animate-pulse">● OFFLINE</div>
-                    <p class="text-gray-500 text-xs uppercase tracking-widest mt-2">Menu Loader</p>
+    <section id="creds" class="page flex-col items-center justify-center w-full max-w-4xl px-6 pt-32 pb-20">
+        <h2 class="text-3xl font-black mb-10 uppercase text-center">Project <span class="text-blue-500">Credits</span></h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+            <div class="card-item p-8 relative overflow-hidden border-blue-500/10">
+                <span class="absolute top-4 right-4 text-[10px] font-bold text-blue-500/40 uppercase tracking-widest">Founder</span>
+                <h3 class="text-2xl font-black mb-1">Rosary</h3>
+                <p class="text-blue-400 text-[10px] font-bold uppercase mb-4">Lead Programmer</p>
+                <div class="text-xs text-gray-400 space-y-1">
+                    <p>● Lead Mod Menu Coder (PhotonRPC)</p>
+                    <p>● Bot Scripting & Security</p>
+                    <p>● Core Architecture</p>
                 </div>
-                <div>
-                    <div class="text-green-500 font-black text-3xl">● ONLINE</div>
-                    <p class="text-gray-500 text-xs uppercase tracking-widest mt-2">Discord & Auth</p>
+            </div>
+            <div class="card-item p-8 relative overflow-hidden border-blue-500/10">
+                <span class="absolute top-4 right-4 text-[10px] font-bold text-blue-500/40 uppercase tracking-widest">Co-Founder</span>
+                <h3 class="text-2xl font-black mb-1">Zyphoria</h3>
+                <p class="text-blue-400 text-[10px] font-bold uppercase mb-4">Operations & Dev</p>
+                <div class="text-xs text-gray-400 space-y-1">
+                    <p>● Web Arch & Design</p>
+                    <p>● Bot Infrastructure</p>
+                    <p>● Server Setup & Menu Testing</p>
                 </div>
             </div>
-            <p class="mt-12 text-gray-500 italic text-sm">"Our developers are currently bypassing the latest anti-cheat patches."</p>
         </div>
     </section>
 
-    <section id="logs" class="page-section flex-col items-center justify-center w-full max-w-3xl px-6 pt-32 pb-20">
-        <h2 class="text-3xl font-black mb-10 uppercase tracking-tighter text-center">Development <span class="text-blue-500">History</span></h2>
-        <div class="log-card p-8 w-full border-l-4 border-blue-600">
-            <div class="flex justify-between items-center mb-6">
-                <span class="bg-blue-600/20 text-blue-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest">v1.0 Progress</span>
-                <span class="text-gray-600 text-xs font-bold uppercase">MARCH 2026</span>
+    <section id="status" class="page flex-col items-center justify-center w-full max-w-3xl px-6 pt-32 pb-20">
+        <div class="panel-main w-full p-10 text-center glow-r border-red-500/10">
+            <h2 class="text-2xl font-bold mb-8 uppercase tracking-widest">System Status</h2>
+            <div class="flex justify-around items-center">
+                <div class="text-red-500 font-black text-xl animate-pulse">● OFFLINE</div>
+                <div class="text-green-500 font-black text-xl">● ONLINE</div>
             </div>
-            <ul class="space-y-4 text-gray-400 text-sm">
-                <li>● Rewriting the internal injector for safety.</li>
-                <li>● Fixing Buttons for the menu!</li>
-                <li>● Member count reached 25+ founding users.</li>
-            </ul>
+            <p class="mt-8 text-gray-500 text-xs italic italic">Rewriting bypasses for latest patch.</p>
         </div>
     </section>
 
-    <footer class="py-10 text-gray-600 text-[10px] uppercase tracking-[0.2em]">
-        © 2026 AWP PROJECT - 25 MEMBERS STRONG
+    <section id="logs" class="page flex-col items-center justify-center w-full max-w-2xl px-6 pt-32 pb-20">
+        <h2 class="text-2xl font-bold mb-8 uppercase text-center">Update <span class="text-blue-500">History</span></h2>
+        <div class="card-item p-6 w-full border-l-2 border-blue-600">
+            <p class="text-blue-400 text-[10px] font-bold mb-2 uppercase">v1.2 In-Dev</p>
+            <div class="text-gray-400 text-xs space-y-2">
+                <p>● Injector safety rewrite.</p>
+                <p>● SteamVR jitter fix.</p>
+                <p>● Hits 25 members.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-10 text-gray-700 text-[9px] font-bold uppercase tracking-widest">
+        AWP PROJECT // 2026 // 25 MEMBERS
     </footer>
 
     <script>
-        function showPage(pageId) {
-            const sections = document.querySelectorAll('.page-section');
-            sections.forEach(section => section.classList.remove('active-section'));
-            document.getElementById(pageId).classList.add('active-section');
-            const links = document.querySelectorAll('.nav-link');
-            links.forEach(link => link.classList.remove('nav-active'));
-            document.getElementById('link-' + pageId).classList.add('nav-active');
-            window.scrollTo(0, 0);
+        function setPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('page-active'));
+            document.getElementById(id).classList.add('page-active');
+            document.querySelectorAll('.nav-btn').forEach(l => l.classList.remove('active-link'));
+            document.getElementById('l-' + id).classList.add('active-link');
+            window.scrollTo(0,0);
         }
 
-        const words = ["Under Development", "Coming Soon", "The Best One Out", "Building Bypasses", "Highly Reliable"];
-        let wordIndex = 0, charIndex = 0, isDeleting = false;
-        const textElement = document.getElementById("typewriter-text");
-
+        const lines = ["Under Development", "Coming Soon", "AWP On Top", "Highly Reliable", "Building Bypasses"];
+        let i = 0, j = 0, del = false;
         function type() {
-            const currentWord = words[wordIndex];
-            textElement.textContent = isDeleting ? currentWord.substring(0, charIndex - 1) : currentWord.substring(0, charIndex + 1);
-            charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
-
-            let speed = isDeleting ? 50 : 100;
-            if (!isDeleting && charIndex === currentWord.length) { speed = 2000; isDeleting = true; }
-            else if (isDeleting && charIndex === 0) { isDeleting = false; wordIndex = (wordIndex + 1) % words.length; speed = 500; }
-            setTimeout(type, speed);
+            const line = lines[i];
+            document.getElementById("typing").textContent = del ? line.substring(0, j--) : line.substring(0, j++);
+            if (!del && j > line.length) { del = true; setTimeout(type, 1500); }
+            else if (del && j < 0) { del = false; i = (i + 1) % lines.length; setTimeout(type, 500); }
+            else { setTimeout(type, del ? 40 : 80); }
         }
-
         document.addEventListener('DOMContentLoaded', type);
     </script>
 </body>
